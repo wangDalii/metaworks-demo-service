@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <springProperty scope="context" name="springAppName" source="spring.application.name" />
+    <!--指定自定义的Converter： CrlfConverter-->
+
+    <!-- You can override this to have a custom pattern -->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%([%d{yyyy-MM-dd HH:mm:ss.SSS}]){faint} %([%5p] [${springAppName}] [%X{traceId:-}] [%X{X-B3-ParentSpanId}] [%X{spanId:-}]) %([${PID:- }]){magenta} %([%t]){faint} %([%-40.40logger{39}]){cyan}  [%(%.-1000msg)] %n" />
+
+    <!-- Appender to log to console -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- Minimum logging level to be presented in the console logs-->
+            <level>DEBUG</level>
+        </filter>
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

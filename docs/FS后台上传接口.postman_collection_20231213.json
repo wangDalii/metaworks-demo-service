@@ -1,0 +1,166 @@
+{
+	"variables": [],
+	"info": {
+		"name": "FS后台上传接口",
+		"_postman_id": "aa021adc-d467-6e47-f814-909f283126bb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "FS-Token获取",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"if (pm.response.headers.has('X-Subject-Token')) {\r",
+							"    var token = pm.response.headers.get('X-Subject-Token')\r",
+							"    pm.environment.set(\"fstoken\", token);\r",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "https://{{host}}:31943/v3/auth/tokens",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"auth\": {\r\n        \"identity\": {\r\n            \"methods\": [\r\n                \"password\"\r\n            ],\r\n            \"password\": {\r\n                \"user\": {\r\n                    \"name\": \"{{username}}\",\r\n                    \"password\": \"{{pwd}}\",\r\n                    \"domain\": {\r\n                        \"name\": \"{{domain}}\"\r\n                    }\r\n                }\r\n            }\r\n        },\r\n        \"scope\": {\r\n            \"project\": {\r\n                \"name\": \"{{image-namespace}}\"\r\n            }\r\n        }\r\n    }\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "模板提交 TOSCA",
+			"request": {
+				"url": "https://{{host}}:31800/v2/templates",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{fstoken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "resource",
+							"value": "{\"name\":\"{{template-name}}\",\"description\":\"xxx\",\"version\":\"{{template-version}}\",\"domain\":\"{{domain}}\",\"vendor\":\"{{domain}}\",\"main_file_name\":\"blueprint.yaml\",\"filename\":\"{{template-filename}}\"}",
+							"type": "text"
+						},
+						{
+							"key": "archive_content",
+							"type": "file",
+							"src": "/D:/mess/22-7月/gdesre-alarmflink-23.0.0.B031-Mercy.zip",
+							"value": ""
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "模板提交 Helm",
+			"request": {
+				"url": "https://{{host}}:31943/v2/charts",
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{fstoken}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"description": ""
+					},
+					{
+						"key": "Projectname",
+						"value": "sthy-hz",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "content",
+							"type": "file",
+							"src": "kstymh-1.0.9.tgz"
+						},
+						{
+							"key": "parameters",
+							"value": "{\"domain\":\"ytgfst\",\"public\":false,\"override\":true,\"skip_lint\":false}",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "上传镜像",
+			"request": {
+				"url": "https://{{host}}:20202/dockyard/v2/domains/{{domain}}/namespaces/{{image-namespace}}/images",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "X-Auth-Token",
+						"value": "{{fstoken}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/home/paas/app_import/AutoUpgrade/images/gdesre-alarmflink-23.0.0.B031.tar",
+							"value": ""
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-service
+  namespace: xx
+spec:
+  selector:
+    matchLabels:
+      app: app-service
+  template:
+    metadata:
+      annotations:
+        application.kubernetes.io/logsrotate: '[{"name":"app-service-log", "rotate":""}]'
+      labels:
+        app: app-service
+    spec:
+      containers:
+      - name: app-service
+        image: {{ .Values.image.registry }}/{{ .Values.image.tag.app_service }}
+        env:
+        - name: JAVA_OPTS
+          value: -Dspring.config.location=file:/app/application.yml -XX:+UseContainerSupport -XX:InitialRAMPercentage=75.0 -XX:MaxRAMPercentage=80.0
+        # rsources资源配额请根据自身应用情况申请
+        resources: 
+          limits:
+            cpu: 2
+            memory: 2Gi
+          requests:
+            cpu: 0.2
+            memory: 500Mi
+        volumeMounts:
+        - name: app-service
+          mountPath: /app/application.yml
+          subPath: application.yml
+        - mountPath: /app/logs
+          name: app-service-log
+      volumes:
+      - name: app-service
+        configMap:
+          name: app-service
+      - hostPath:
+          path: /opt/ado/log/app-service
+          type: ""
+        name: app-service-log
+      imagePullSecrets:
+      - name: kube-system-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+  namespace: xx
+spec:
+  ports:
+  - name: app-service
+    port: 9009
+    protocol: TCP
+    targetPort: 9009
+  selector:
+    app: app-service

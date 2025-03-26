@@ -1,0 +1,20 @@
+﻿# 镜像
+image:
+  registry:
+  tag:
+    app_service: appservice:latest
+    
+
+
+
+
+jwt:
+  rsa:
+    public:
+
+
+iam:
+  ucmarket:
+    username:
+    password:
+    
