@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}-configmap
+  namespace: {{ .Values.namespace }}
+data:
+  application.yml: |
+    # 整个premise集群的入口地址，使用时需替换成相关环境地址，按需修改namespace
+    ucmarket.baseurl: https://ado-gateway.kube-system.svc.cluster.local:443
+    # jwt检查公钥，取自ado-baseservice-cfg-configmap的gkit.iam.jwt.rsa.public
+    ucmarket.security.jwt.rsa.secret.public: {{ .Values.jwt.rsa.public }}
+    #检查token白名单配置，没有时配置为空，或者不配置
+    ucmarket.security.interceptor.url.whitelist: GET|/demo/test,GET|/error
+
+    # 机器账号配置
+    iam:
+      ucmarket:
+        url: ${ucmarket.baseurl}/iam/keystone/auth/getToken
+        # 机机账号名
+        username: {{ .Values.iam.ucmarket.username }}
+        # 机机密码
+        password: {{ .Values.iam.ucmarket.password }}
+        domain: svc.app
+

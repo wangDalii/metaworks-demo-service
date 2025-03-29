@@ -3,8 +3,12 @@ image:
   registry:
   tag:
     app_service: appservice:latest
-    
 
+# 应用名称
+name: app-service
+
+# 命名空间
+namespace: xx
 
 
 

@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-service
-  namespace: xx
+  name: {{ .Values.name }}-deployment
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     matchLabels:
-      app: app-service
+      app: {{ .Values.name }}
   template:
     metadata:
       annotations:
-        application.kubernetes.io/logsrotate: '[{"name":"app-service-log", "rotate":""}]'
+        application.kubernetes.io/logsrotate: '[{"name":"{{ .Values.name }}-logs", "rotate":""}]'
       labels:
-        app: app-service
+        app: {{ .Values.name }}
     spec:
       containers:
-      - name: app-service
+      - name: {{ .Values.name }}-container
         image: {{ .Values.image.registry }}/{{ .Values.image.tag.app_service }}
         env:
         - name: JAVA_OPTS
@@ -29,32 +29,32 @@ spec:
             cpu: 0.2
             memory: 500Mi
         volumeMounts:
-        - name: app-service
+        - name: {{ .Values.name }}-config
           mountPath: /app/application.yml
           subPath: application.yml
         - mountPath: /app/logs
-          name: app-service-log
+          name: {{ .Values.name }}-logs
       volumes:
-      - name: app-service
+      - name: {{ .Values.name }}-config
         configMap:
-          name: app-service
+          name: {{ .Values.name }}-configmap
       - hostPath:
-          path: /opt/ado/log/app-service
+          path: /opt/ado/log/{{ .Values.name }}
           type: ""
-        name: app-service-log
+        name: {{ .Values.name }}-logs
       imagePullSecrets:
       - name: kube-system-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-service
-  namespace: xx
+  name: {{ .Values.name }}-service
+  namespace: {{ .Values.namespace }}
 spec:
   ports:
-  - name: app-service
-    port: 9009
+  - name: {{ .Values.name }}-port
+    port: 8889
     protocol: TCP
-    targetPort: 9009
+    targetPort: 8889
   selector:
-    app: app-service
+    app: {{ .Values.name }}

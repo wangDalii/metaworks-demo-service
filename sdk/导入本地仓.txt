@@ -1,8 +1,8 @@
-mvn install:install-file -Dfile=sdk\authentication-3.5.3.jar -DgroupId=com.huawei.ucmarket -DartifactId=authentication -Dversion=3.5.3 -Dpackaging=jar
-mvn install:install-file -Dfile=sdk\authentication-3.5.3.pom -DgroupId=com.huawei.ucmarket -DartifactId=authentication -Dversion=3.5.3 -Dpackaging=pom
+mvn install:install-file -Dfile=authentication-3.5.3.jar -DgroupId=com.huawei.ucmarket -DartifactId=authentication -Dversion=3.5.3 -Dpackaging=jar
+mvn install:install-file -Dfile=authentication-3.5.3.pom -DgroupId=com.huawei.ucmarket -DartifactId=authentication -Dversion=3.5.3 -Dpackaging=pom
 
-mvn install:install-file -Dfile=sdk\https-starter-3.5.3.jar -DgroupId=com.huawei.ucmarket -DartifactId=https-starter -Dversion=3.5.3 -Dpackaging=jar
-mvn install:install-file -Dfile=sdk\https-starter-3.5.3.pom -DgroupId=com.huawei.ucmarket -DartifactId=https-starter -Dversion=3.5.3 -Dpackaging=pom
+mvn install:install-file -Dfile=https-starter-3.5.3.jar -DgroupId=com.huawei.ucmarket -DartifactId=https-starter -Dversion=3.5.3 -Dpackaging=jar
+mvn install:install-file -Dfile=https-starter-3.5.3.pom -DgroupId=com.huawei.ucmarket -DartifactId=https-starter -Dversion=3.5.3 -Dpackaging=pom
 
-mvn install:install-file -Dfile=sdk\security-start-3.5.3.jar -DgroupId=com.huawei.ucmarket -DartifactId=security-start -Dversion=3.5.3 -Dpackaging=jar
-mvn install:install-file -Dfile=sdk\security-start-3.5.3.pom -DgroupId=com.huawei.ucmarket -DartifactId=security-start -Dversion=3.5.3 -Dpackaging=pom
+mvn install:install-file -Dfile=security-start-3.5.3.jar -DgroupId=com.huawei.ucmarket -DartifactId=security-start -Dversion=3.5.3 -Dpackaging=jar
+mvn install:install-file -Dfile=security-start-3.5.3.pom -DgroupId=com.huawei.ucmarket -DartifactId=security-start -Dversion=3.5.3 -Dpackaging=pom

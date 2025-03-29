@@ -3,7 +3,7 @@
  *
  */
 
-package demo;
+package com.huawei.metaworks.demo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +22,10 @@ import java.util.TimeZone;
  */
 @SpringBootApplication
 @ComponentScan(basePackages = {
-    "com.huawei.ucmarket.security", "demo"
+    "com.huawei.ucmarket.security", "com.huawei.metaworks.demo"
 })
-public class DemoApp {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DemoApp.class);
+public class DemoApplication {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DemoApplication.class);
 
     /**
      * The main method.
@@ -35,7 +35,7 @@ public class DemoApp {
     public static void main(String[] args) {
         final TimeZone zone = TimeZone.getTimeZone("GMT+0");
         TimeZone.setDefault(zone);
-        SpringApplication application = new SpringApplication(DemoApp.class);
+        SpringApplication application = new SpringApplication(DemoApplication.class);
         application.run(args);
     }
 
